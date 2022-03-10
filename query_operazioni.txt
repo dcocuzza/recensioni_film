@@ -1,0 +1,34 @@
+O1 Registrazione di un nuovo utente
+INSERT INTO `progettobasididati`.`utente` (`nome`, `cognome`, `email`, `password`) VALUES ('Giovanni', 'Rosini', 'gioros@gmail.com', 'gio98');
+
+O2 Inserimento di un nuovo film
+INSERT INTO `progettobasididati`.`film` (`titolo`, `trama`, `uscita`) VALUES ('Assassinio sul Nilo', 'Mentre è in vacanza sul Nilo, il geniale detective di fama mondiale Hercule Poirot si ritrova a dover indagare sull omicidio di una giovane ereditiera.', '2017-01-06');
+
+O3 Scrittura recensione di un film da parte di un utente
+INSERT INTO `progettobasididati`.`recensione` (`idutente`, `idfilm`, `voto`, `commento`) VALUES ('1', '3', '10', 'Bellissimo');
+
+O4 Stampa informazioni su un film
+SELECT cast.nome, cast.cognome, ruolo
+FROM cast, ruolo, ruolofilm
+WHERE ruolofilm.idcast = cast.id AND ruolofilm.idruolo = ruolo.id AND ruolofilm.idfilm = 1
+
+O5 Stampa recensioni di un film
+SELECT nome, cognome, voto, commento
+FROM recensione, utente
+WHERE recensione.idutente = utente.id AND idfilm = 1
+
+O6 Stampa media dei voti dei film
+SELECT titolo, AVG(voto)
+FROM film, recensione
+WHERE film.id = recensione.idfilm
+GROUP BY titolo
+
+O7 Dato un attore trovare i film in cui ha recitato
+SELECT distinct titolo
+FROM film, ruolofilm, ruolo, cast
+WHERE film.id = ruolofilm.idfilm AND ruolo = 'attore' AND ruolofilm.idcast = 1
+
+O8 Elencare tutti i film fantasy
+SELECT titolo
+FROM film, generefilm, genere
+WHERE film.id = generefilm.idfilm AND genere.id = generefilm.idgenere AND genere.descrizione = "fantasy"
